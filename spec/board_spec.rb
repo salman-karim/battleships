@@ -29,6 +29,13 @@ describe Board do
       subject.place('destroyer',2)
       expect(subject.strike(7)).to eq 'MISS!'
     end
+
+    it 'records "H" if ship is hit' do
+      subject.place('destroyer', 2)
+      subject.strike(3)
+      expect(subject.board[2]).to eq 'H'
+    end
+
   end
 
 

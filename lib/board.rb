@@ -23,7 +23,7 @@ class Board
   end
 
   def strike(target)
-    @board[target]=='w' ? 'MISS!' : 'HIT!'
+    @board[target-1]=='w' ? @board[target-1] = 'w' : @board[target-1] = 'H' #better way to write?
+    @board[target-1]=='H' ? 'HIT!' : 'MISS!'
   end
-
 end
