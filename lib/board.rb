@@ -1,6 +1,8 @@
 require_relative 'ship'
+
 class Board
-attr_reader :ships
+
+  attr_reader :ships
 
   def initialize
     @ships = []
@@ -10,5 +12,8 @@ attr_reader :ships
   	@ships <<ship
   end
 
+  def strike(position)
+    'HIT!'
+  end
 
 end
