@@ -5,8 +5,8 @@ describe Board do
 
   describe 'strike' do
     it 'can hit a ship placed on the board' do
-      ship = Ship.new('A4')
-      subject.place(ship)
+      ship = double :ship, position: 'A4'
+      subject.place ship
       expect(subject.strike(ship.position)).to eq 'HIT!'
     end
 
@@ -15,14 +15,11 @@ describe Board do
     end
   end
 
-
-
-
   describe 'place ship' do
     it 'places a ship on the board' do
-      ship = Ship.new("A4")
-      subject.place(ship)
-      expect(subject.ships).to include("A4")
+      ship = double :ship, position: 'A4'
+      subject.place ship
+      expect(subject.board).to include("A4")
     end
   end
 end
