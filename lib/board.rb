@@ -7,14 +7,16 @@ class Board
   attr_reader :ships, :board
 
   def initialize
-    @board = ['w','w','w','w','w','w','w','w','w','w']
-    @ships = {'destroyer' => 3, 'battleship' => 4} #Why can't we use the symbol creator?
+    @board = [['w','w'],
+              ['w','w']]
+
+    @ships = {'destroyer' => 2, 'battleship' => 4} #Why can't we use the symbol creator?
   end
 
-  def place(ship, point)
-    fail 'Ship already placed there!' if @board[point-1..ships[ship]+1].any? {|x| x!='w'}
-    fail 'Cannot place ship outside board!' if ((point-1)+ships[ship])>@board.length
-     @board[point-1..ships[ship]+1] = create_array(ship)
+  def place(ship, x, y)
+    # fail 'Ship already placed there!' if @board[x-1..ships[ship]+1].any? {|element| element!='w'}
+    # fail 'Cannot place ship outside board!' if ((x-1)+ships[ship])>@board.length
+     @board[[x-1,y-1]..[[ships[ship]+1],y-1]] = create_array(ship)
      @board
   end
 

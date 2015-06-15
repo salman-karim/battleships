@@ -1,10 +1,57 @@
 class Ship
 
-attr_reader :position
+  attr_reader :ships, :grid, :alphabet
 
-  def initialize(position)
-    @position = position
+  def initialize
+    @grid = [['x','x'],
+             ['x','x']]
+    @ships = {'destroyer' => 2, 'battleship' => 4} #Why can't we use the symbol creator?
+    @alphabet = ('a'..'z').to_a
+
   end
+
+  def place_horizontal(ship,y,x)
+    # fail 'Ship already placed there!' if @board[x-1..ships[ship]+1].any? {|element| element!='w'}
+    # fail 'Cannot place ship outside board!' if ((x-1)+ships[ship])>@board.length
+     x = @alphabet.index(x)
+     @grid[y-1][(x)..(x+ships[ship])] = create_array(ship)
+  end
+
+  def place_vertical(ship,y,x)
+    # fail 'Ship already placed there!' if @board[x-1..ships[ship]+1].any? {|element| element!='w'}
+    # fail 'Cannot place ship outside board!' if ((x-1)+ships[ship])>@board.length
+  end
+
+
+  def convert_y(ship,y)
+    y_array = (y-1..ships[ship]-1).to_a
+    # y_array_of_arrays = y_array.each {|y| y.to_a}
+  end
+
+  def convert_x(ship,x)
+    x = @alphabet.index(x)
+    x_array = ((x.to_s)*ships[ship]).split('').map! {|s| s.to_i}
+    # x_array_of_arrays = x_array {|x| x.to_a}
+  end
+
+  def combine(ship,y,x)
+     z = convert_y(ship,y).zip(convert_x(ship,x))
+     z.each { |y,x| @grid[y][x] = ship[0] }
+  end
+
+  # z.each do |x|
+
+
+
+
+
+
+
+
+  def create_array(ship)
+      (ship[0]*ships[ship]).split('')
+  end
+
 
   # destroyer = Ship.New([s,s])
   # cruiser = Ship.New([s,s,s])
