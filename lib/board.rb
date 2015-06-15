@@ -9,11 +9,11 @@ class Board
   end
 
   def place(ship)
-  	@ships <<ship
+    @ships <<ship.position
   end
 
   def strike(position)
-    'HIT!'
+    @ships.include?(position) ? 'HIT!' : 'MISS!'
   end
 
 end
