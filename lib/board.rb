@@ -15,21 +15,19 @@ class Board
              ['w','w','w','w','w','w','w','w','w','w'],]
 
     @ships = {'destroyer' => 2, 'cruiser' => 3, 'submarine' => 3, 'battleship' => 4, 'aircraft carrier' => 5} #Why can't we use the symbol creator?
-    @alphabet = ('a'..'z').to_a
+    @alphabet = ('a'..'j').to_a
 
   end
 
   def place_horizontal(ship,y,x)
-    # fail 'Cannot place ship outside board!' if ((x-1)+ships[ship])>@board.length
      x = @alphabet.index(x)
-
+     fail 'Cannot place ship outside board!' if ((x-1)+ships[ship])>@grid.length
      fail 'Ship already placed there!' if @grid[y-1][(x)..(x+ships[ship])].any? { |element| element != 'w' }
-     @grid[y-1][(x)..(x+ships[ship])] = create_array(ship)
+     @grid[y-1][(x)...(x+ships[ship])] = create_array(ship)
   end
 
   def place_vertical(ship,y,x)
-    # fail 'Ship already placed there!' if @board[x-1..ships[ship]+1].any? {|element| element!='w'}
-    # fail 'Cannot place ship outside board!' if ((x-1)+ships[ship])>@board.length
+    fail 'Cannot place ship outside board!' if ((y-1)+ships[ship])>@grid.length
     combine_y_x(ship,y,x)
     @grid
   end
