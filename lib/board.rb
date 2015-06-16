@@ -32,7 +32,6 @@ class Board
     @grid
   end
 
-
   def convert_y(ship,y)
     y_array = (y-1...y+ships[ship]-1).to_a
     # y_array_of_arrays = y_array.each {|y| y.to_a}
@@ -50,13 +49,16 @@ class Board
      z.each { |y,x| @grid[y][x] = ship[0] }
   end
 
-  # z.each do |x|
+  def strike(y,x)
+    x = @alphabet.index(x)
+    @grid[y-1][x] != 'w' || 'M' ? @grid[y-1][x] = 'H' : @grid[y-1][x] = 'M'
+    report_strike
+  end
 
-
-
-
-
-
+  def report_strike(y,x)
+    x = @alphabet.index(x)
+    @grid[y-1][x] == 'H' ? 'HIT!' : 'MISS!'
+  end
 
 
   def create_array(ship)

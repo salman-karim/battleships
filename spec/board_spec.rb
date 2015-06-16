@@ -33,14 +33,35 @@ describe Board do
       expect{subject.place_vertical('battleship',9,'a')}.to raise_error 'Cannot place ship outside board!'
     end
   end
-end
 
-  # describe 'strike' do
-  #   it 'can hit a ship placed on the board' do
-  #     subject.place('destroyer',2)
-  #     expect(subject.strike(3)).to eq 'HIT!'
-  #   end
-  #
+
+  describe 'strike' do
+
+    it 'can hit a ship placed on the board' do
+      subject.place_horizontal('destroyer',1,'a')
+      expect(subject.grid[0][0]).to eq 'H'
+    end
+
+    it 'reports when a ship is hit' do
+      subject.place_horizontal('destroyer',1,'a')
+      expect(subject.strike(1,'a')).to eq 'HIT!'
+    end
+
+    it 'misses when a ship is not hit' do
+      subject.place_horizontal('destroyer',1,'a')
+      expect(subject.strike(5,'d')).to eq 'MISS!'
+    end
+
+    # it 'reports when a ship is hit' do
+    #   subject.place_horizontal('destroyer',1,'a')
+    #   expect(subject.report_strike(1,'a')).to eq 'HIT!'
+    # end
+
+
+
+  end
+
+
   #   it 'returns a miss if ship is not hit' do
   #     subject.place('destroyer',2)
   #     expect(subject.strike(7)).to eq 'MISS!'
@@ -51,3 +72,5 @@ end
   #     subject.strike(3)
   #     expect(subject.board[2]).to eq 'H'
   #   end
+
+end
