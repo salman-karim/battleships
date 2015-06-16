@@ -20,10 +20,12 @@ class Board
   end
 
   def place_horizontal(ship,y,x)
+
      x = @alphabet.index(x)
      fail 'Cannot place ship outside board!' if ((x-1)+ships[ship])>@grid.length
      fail 'Ship already placed there!' if @grid[y-1][(x)..(x+ships[ship])].any? { |element| element != 'w' }
      @grid[y-1][(x)...(x+ships[ship])] = create_array(ship)
+     @grid
   end
 
   def place_vertical(ship,y,x)
@@ -50,13 +52,13 @@ class Board
   end
 
   def strike(y,x)
-    x = @alphabet.index(x)
-    @grid[y-1][x] != 'w' || 'M' ? @grid[y-1][x] = 'H' : @grid[y-1][x] = 'M'
-    report_strike
+    x_int = @alphabet.index(x)
+    @grid[y-1][x_int] != ('w' || 'M') ? @grid[y-1][x_int] = 'H' : @grid[y-1][x_int] = 'M'
+    # || @grid[y-1][x_int] != 'M'
+    report_strike(y,x_int)
   end
 
   def report_strike(y,x)
-    x = @alphabet.index(x)
     @grid[y-1][x] == 'H' ? 'HIT!' : 'MISS!'
   end
 
