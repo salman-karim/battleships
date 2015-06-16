@@ -1,6 +1,10 @@
-module Ship
+class Destroyer
 
-  attr_reader :ships, :grid, :alphabet
+  def initialize
+    @ships = {'destroyer' => 2}
+  end
+
+  attr_reader :grid, :alphabet
 
   def initialize
     @grid = [['x','x','x','x','x','x','x','x','x','x'],
@@ -14,53 +18,43 @@ module Ship
              ['x','x','x','x','x','x','x','x','x','x'],
              ['x','x','x','x','x','x','x','x','x','x'],]
 
-    @ships = {'destroyer' => 2, 'cruiser' => 3, 'submarine' => 3, 'battleship' => 4, 'aircraft carrier' => 5} #Why can't we use the symbol creator?
     @alphabet = ('a'..'z').to_a
 
   end
 
-  def place_horizontal(ship,y,x)
+  def place_horizontal(y,x)
     # fail 'Ship already placed there!' if @board[x-1..ships[ship]+1].any? {|element| element!='w'}
     # fail 'Cannot place ship outside board!' if ((x-1)+ships[ship])>@board.length
      x = @alphabet.index(x)
-     @grid[y-1][(x)..(x+ships[ship])] = create_array(ship)
+     @grid[y-1][(x)..(x+2)] = ['d','d']
   end
 
-  def place_vertical(ship,y,x)
+  def place_vertical(y,x)
     # fail 'Ship already placed there!' if @board[x-1..ships[ship]+1].any? {|element| element!='w'}
     # fail 'Cannot place ship outside board!' if ((x-1)+ships[ship])>@board.length
-    combine_y_x(ship,y,x)
+    combine_y_x(y,x)
     @grid
   end
 
 
-  def convert_y(ship,y)
-    y_array = (y-1...y+ships[ship]-1).to_a
+  def convert_y(y)
+    y_array = (y-1...y+1).to_a
     # y_array_of_arrays = y_array.each {|y| y.to_a}
   end
 
-  def convert_x(ship,x)
+  def convert_x(x)
     x = @alphabet.index(x)
-    x_array = ((x.to_s)*ships[ship]).split('').map! {|s| s.to_i}
+    x_array = ((x.to_s)*2).split('').map! {|s| s.to_i}
     # x_array_of_arrays = x_array {|x| x.to_a}
   end
 
-  def combine_y_x(ship,y,x)
-     z = convert_y(ship,y).zip(convert_x(ship,x))
-     z.each { |y,x| @grid[y][x] = ship[0] }
+  def combine_y_x(y,x)
+     z = convert_y(y).zip(convert_x(x))
+     z.each { |y,x| @grid[y][x] = 'd' }
   end
 
-  # z.each do |x|
-
-
-
-
-
-
-
-
   def create_array(ship)
-      (ship[0]*ships[ship]).split('')
+      ('d'*2).split('')
   end
 
 
