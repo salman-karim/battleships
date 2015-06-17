@@ -1,13 +1,13 @@
 class Destroyer
 
-attr_reader :destroyer
+  attr_reader :character, :size, :armour
 
-def initialize
-    @character = 'D'
-    @size = 2
-    @armour = 2
+  def initialize
+      @size = 2
+      @armour = 2
+  end
+
 end
-
 
 
 

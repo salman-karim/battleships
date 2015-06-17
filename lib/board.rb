@@ -1,4 +1,4 @@
-require_relative 'ships'
+require_relative 'destroyer'
 
 class Board
 
@@ -29,21 +29,34 @@ class Board
   def convert_coordinates(position)
     @y_coordinate = @rise[(position[0]).to_s]
     @x_coordinate = @run[(position[1]).to_i]
-
   end
 
   def place_h(ship,position)
     # fail 'invalid object' unless ship.kind_of? Ship
     convert_coordinates(position)
+    fail 'Ship already placed there!' if @grid[@y_coordinate][@x_coordinate...(@x_coordinate+ship.size)].any? { |element| element != 'w' }
     @grid[@y_coordinate][@x_coordinate...(@x_coordinate+ship.size)] = Array.new(ship.size, ship)
   end
 
   def place_v(ship,position)
+    lat = lat_array(ship,position)
+    long = long_array(ship,position)
+    combined = combined_lat_long(lat, long)
+    combined.each {|element1, element2| @grid[element1][element2] = ship}
+  end
+
+  def lat_array(ship,position)
     convert_coordinates(position)
-    y_array = (@y_coordinate...@y_coordinate+ship.size).to_a
-    x_array = ((@x_coordinate.to_s)*(ship.size)).split('').map! {|s| s.to_i}
-    z_array = y_array.zip(x_array)
-    z_array.each {|element1, element2| @grid[element1][element2] = ship}
+    lat_array = (@y_coordinate...@y_coordinate+ship.size).to_a
+  end
+
+  def long_array(ship,position)
+    convert_coordinates(position)
+    long_array = ((@x_coordinate.to_s)*(ship.size)).split('').map! {|s| s.to_i}
+  end
+
+  def combined_lat_long(lat_array, long_array)
+    combined_lat_long = lat_array.zip(long_array)
   end
 
 end
