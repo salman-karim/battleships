@@ -1,14 +1,21 @@
 class Destroyer
 
-attr_reader :destroyer
+  attr_accessor :character, :size, :armour
 
-def initialize
-    @character = 'D'
-    @size = 2
-    @armour = 2
+  def initialize
+      @size = 3
+      @armour = 5
+  end
+
+  def hit_ship
+    self.armour -= 1
+    return "Destroyer sunk!"if armour == 0 
+  end
+
+
+
+
 end
-
-
 
 
 #

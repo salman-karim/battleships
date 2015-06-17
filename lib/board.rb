@@ -1,3 +1,5 @@
+# require_relative 'ship'
+
 class Board
 
   attr_accessor :y_coordinate, :x_coordinate, :grid
@@ -63,11 +65,20 @@ class Board
   end
 
   def strike(position)
-      convert_coordinates(position)
-      @grid[y_coordinate][x_coordinate] != ('w' || 'M') ? @grid[y_coordinate][x_coordinate] = 'H' : @grid[y_coordinate][x_coordinate] = 'M'
-      # report_strike(y,x_int)
-    end
+    convert_coordinates(position)
+    grid[y_coordinate][x_coordinate] != ('w' || 'M') ? @grid[y_coordinate][x_coordinate] = 'H' : @grid[y_coordinate][x_coordinate] = 'M'
+    report_strike(position)
+  end
 
+  def report_strike(position)
+    convert_coordinates(position)
+    grid[y_coordinate][x_coordinate] == 'H' ? 'HIT!' : 'MISS!'
+  end
+
+  def damage_ship(position)
+    convert_coordinates(position)
+    grid[y_coordinate][x_coordinate].hit_ship if grid[y_coordinate][x_coordinate].is_a?(Destroyer)
+  end
 end
 
 
