@@ -1,9 +1,7 @@
-require_relative 'destroyer'
-
 class Board
 
-  attr_accessor :y_coordinate, :x_coordinate
-  attr_reader :grid, :rise, :run
+  attr_accessor :y_coordinate, :x_coordinate, :grid
+  attr_reader :rise, :run
 
   def initialize
     @grid = [['w','w','w','w','w','w','w','w','w','w'],
@@ -17,47 +15,58 @@ class Board
              ['w','w','w','w','w','w','w','w','w','w'],
              ['w','w','w','w','w','w','w','w','w','w'],]
 
-    # @ships = {'destroyer' => 2, 'cruiser' => 3, 'submarine' => 3, 'battleship' => 4, 'aircraft carrier' => 5} #Why can't we use the symbol creator?
-    # @coordinates_converter = Coordinates.New
+
     @rise = ('A'..'J').zip(0..9).to_h
     @run = (1..10).zip(0..9).to_h
-    @y_coordinate
-    @x_coordinate
-
   end
 
+  # def y_coordinate(position)
+  #   rise[(position[0]).to_s]
+  # end
+  # # use y = y_coordinate
+
+
   def convert_coordinates(position)
-    @y_coordinate = @rise[(position[0]).to_s]
-    @x_coordinate = @run[(position[1]).to_i]
+    self.y_coordinate = rise[(position[0]).to_s]
+    self.x_coordinate = run[(position[1..2]).to_i]
   end
 
   def place_h(ship,position)
     # fail 'invalid object' unless ship.kind_of? Ship
     convert_coordinates(position)
-    fail 'Ship already placed there!' if @grid[@y_coordinate][@x_coordinate...(@x_coordinate+ship.size)].any? { |element| element != 'w' }
-    @grid[@y_coordinate][@x_coordinate...(@x_coordinate+ship.size)] = Array.new(ship.size, ship)
+    fail 'Ship already placed there!' if grid[y_coordinate][x_coordinate...(x_coordinate+ship.size)].any? { |element| element != 'w' }
+    fail 'Ship cannot place ship outside board!' if (x_coordinate + ship.size) > grid.length
+    grid[y_coordinate][x_coordinate...(x_coordinate+ship.size)] = Array.new(ship.size, ship)
   end
 
   def place_v(ship,position)
     lat = lat_array(ship,position)
     long = long_array(ship,position)
     combined = combined_lat_long(lat, long)
-    combined.each {|element1, element2| @grid[element1][element2] = ship}
+    fail 'Cannot place ship outside board!' if (y_coordinate + ship.size) > grid.length
+    fail 'Ship already placed there!' if combined.any? {|element1, element2| grid[element1][element2] != 'w' }
+    combined.each {|element1, element2| grid[element1][element2] = ship}
   end
 
   def lat_array(ship,position)
     convert_coordinates(position)
-    lat_array = (@y_coordinate...@y_coordinate+ship.size).to_a
+    lat_array = (y_coordinate...y_coordinate+ship.size).to_a
   end
 
   def long_array(ship,position)
     convert_coordinates(position)
-    long_array = ((@x_coordinate.to_s)*(ship.size)).split('').map! {|s| s.to_i}
+    long_array = ((x_coordinate.to_s)*(ship.size)).split('').map! {|s| s.to_i}
   end
 
   def combined_lat_long(lat_array, long_array)
     combined_lat_long = lat_array.zip(long_array)
   end
+
+  def strike(position)
+      convert_coordinates(position)
+      @grid[y_coordinate][x_coordinate] != ('w' || 'M') ? @grid[y_coordinate][x_coordinate] = 'H' : @grid[y_coordinate][x_coordinate] = 'M'
+      # report_strike(y,x_int)
+    end
 
 end
 
