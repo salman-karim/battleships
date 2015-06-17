@@ -39,6 +39,7 @@ describe Board do
 
     it 'can hit a ship placed on the board' do
       subject.place_horizontal('destroyer',1,'a')
+      subject.strike(1,'a')
       expect(subject.grid[0][0]).to eq 'H'
     end
 
@@ -48,6 +49,12 @@ describe Board do
     end
 
     it 'misses when a ship is not hit' do
+      subject.place_horizontal('destroyer',1,'a')
+      subject.strike(5,'d')
+      expect(subject.grid[4][3]).to eq 'M'
+    end
+
+    it 'reports when a ship is hit' do
       subject.place_horizontal('destroyer',1,'a')
       expect(subject.strike(5,'d')).to eq 'MISS!'
     end
