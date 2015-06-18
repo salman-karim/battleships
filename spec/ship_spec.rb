@@ -1,6 +1,12 @@
 require 'ship'
+require 'player'
 
 describe Ship do
+
+  before(:each) do
+    @@count = { destroyer: 0, submarine: 0, cruiser: 0, battleship: 0, aircraft_carrier: 0}
+    allow($stdout).to receive(:puts)
+  end
 
   describe 'create' do
     it 'should be able to accept type when enterd' do
@@ -33,10 +39,15 @@ describe Ship do
     end
 
     it 'should sink a ship' do
-      sub = Ship.create(:submarine)
-      (sub.size-1).times {sub.hit_ship}
-      expect(sub.hit_ship).to eq "submarine sunk!"
+      player1 = Player.new
+      board1 = Board.new
+      board1.place_h(player1.submarine,'A1')
+      board1.strike('A1')
+      board1.strike('A2')
+      expect(board1.strike('A3')).to eq "submarine sunk!"
     end
+
+    # add test to make sure can't hit H again
   end
 end
 

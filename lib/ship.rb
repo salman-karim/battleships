@@ -15,9 +15,8 @@ class Ship
     @@count
   end
 
-
-
   def initialize(type)
+    fail "Max no. of #{type}s created" if @@count[type] == 2
     @@count[type] += 1
     @type = type
     @size = SIZES[type]
@@ -27,7 +26,7 @@ class Ship
   def hit_ship
     self.armour -= 1
     puts "#{type} armour = #{armour}"
-    return "#{type} sunk!" if armour == 0
+    return "#{type} sunk!" if self.armour == 0
   end
 
 end
