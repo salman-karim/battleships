@@ -1,19 +1,25 @@
-class Destroyer
+class Ship
 
-  attr_accessor :character, :size, :armour
+  SIZES = { destroyer: 2, submarine: 3}
 
-  def initialize
-      @size = 3
-      @armour = 5
+  attr_accessor :type, :size, :armour
+
+  def self.shiptype(shiptype)
+      fail "Please enter a valid ship" if SIZES.include?(shiptype) == false
+      Ship.new (shiptype) #why symbol?
+  end
+
+  def initialize(type)
+    @type = type
+    @size = SIZES[type]
+    @armour = SIZES[type]
   end
 
   def hit_ship
     self.armour -= 1
-    return "Destroyer sunk!"if armour == 0 
+    puts "#{type} armour = #{armour}"
+    return "#{type} sunk!" if armour == 0
   end
-
-
-
 
 end
 

@@ -67,6 +67,7 @@ class Board
   def strike(position)
     convert_coordinates(position)
     grid[y_coordinate][x_coordinate] != ('w' || 'M') ? @grid[y_coordinate][x_coordinate] = 'H' : @grid[y_coordinate][x_coordinate] = 'M'
+    damage_ship(position)
     report_strike(position)
   end
 
@@ -77,7 +78,7 @@ class Board
 
   def damage_ship(position)
     convert_coordinates(position)
-    grid[y_coordinate][x_coordinate].hit_ship if grid[y_coordinate][x_coordinate].is_a?(Destroyer)
+    grid[y_coordinate][x_coordinate].hit_ship if grid[y_coordinate][x_coordinate].is_a?(Ship)
   end
 end
 
